@@ -1,34 +1,9 @@
 import copy
 
-
-
-
-
-#este es el estado inicial, la posición 0 del arreglo almacena las coordenadas del jugador, el resto de posiciones almacenan las coordenadas de las cajas
-#startingState = [[1,1],[],[2,2,0],[2,3,0]]
-#startingState = initialState
 #este es el arreglo con todas las operaciones posibles
 operations = [[-1,0,'U'],[0,-1,'L'],[0,1,'R'],[1,0,'D']]
-#estos son los datos del map a, 'W' representa las paredes, 'g' representa las metas, 'b' representa las cajas y 'p' representa al jugador
-# map=[
-#     ['W','W','W','x','x','W','W'],
-#     ['W','W','W','x','b','W','W'],
-#     ['W','W','W','x','g','W','W'],
-#     ['W','g','b','p','b','g','W'],
-#     ['W','W','W','b','W','W','W'],
-#     ['W','W','W','g','W','W','W'],
-#     ['W','W','W','W','W','W','W']
-#     ]
 
-# map=[
-# ['W','W','W','W','W','W'],
-# ['W','0','0','W','p','W'],
-# ['W','0','b','b','X','W'],
-# ['W','0','0','W','0','W'],
-# ['W','0','0','0','0','W'],
-# ['W','0','X','0','0','W'],
-# ['W','W','W','W','W','W']
-# ]
+
 
 #Función que determina si hay alguna caja en una coordenada específica
 def isBox(y,x, state):
@@ -49,14 +24,6 @@ def isValid(operation,state,map):
     return False
   return True
 
-def resolvedBoxes(state):
-  boxes = state[2::]
-  resolvedB = []
-  for box in boxes:
-    if box[2] == 1:
-      resolvedB.append(box)
-      
-  return resolvedB
 
 #Función que determina si un estado es meta, lo hace evaluando si quedan cajas en el estado que no estén en una meta
 def isSolution(state):
@@ -88,7 +55,6 @@ def expand(state,map):
       #delete se usa para actalizar una caja en el estado en caso de que se mueva a un lugar de meta
       delete = False
       deleteIndex = 0
-
       #newPos almacena la que sería la posición del jugador al final de la operación
       newPos = [(stateBuffer[0][0]+operation[0]),(stateBuffer[0][1]+operation[1])]
       #boxes separa las cajas sin resolver en un arreglo distinto al del jugador
@@ -120,7 +86,7 @@ def expand(state,map):
       if delete:
         boxes[deleteIndex][2]=1
       #aquí se añade el estado hijo a la cola si la operación fue exitosa
-      if not cancelOperation:
+      if not cancelOperation: 
         stateBuffer[1]=stateBuffer[1]+[operation[2]]
         queue.append([newPos]+[stateBuffer[1]]+stateBuffer[2::])
   return None
@@ -131,8 +97,8 @@ def resultBFS(initialState,map):
   queue = [initialState]
   #este ciclo se encarga de expandir nodos, mientras haya por lo menos 1 en la cola
   while (queue):
-    #este condicional se encarga de asegurarse de que no se evalúen más nodos si se llega a la profundidad 64 en el arbol
-    #funciona estimando el número de nodos que habrían al llegar a esa profundidad (b^n) y asegurando que hayan menos de esos nodos en la cola
+      #este condicional se encarga de asegurarse de que no se evalúen más nodos si se llega a la profundidad 64 en el arbol
+      #funciona estimando el número de nodos que habrían al llegar a esa profundidad (b^n) y asegurando que hayan menos de esos nodos en la cola
       if (len(queue)>34028237000000000000000000000000000000000):
         return "Maximum depth reached"
       #aquí se evalúa si el primer nodo de la cola es solución

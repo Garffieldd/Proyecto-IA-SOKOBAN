@@ -1,10 +1,11 @@
-from sokobanBFS import resultBFS
-from sokobanDFS import resultDFS
-from sokobanIDS import resultIDS
+from Algorithms.sokobanBFS import resultBFS
+from Algorithms.sokobanDFS import resultDFS
+from Algorithms.sokobanIDS import resultIDS
 import copy
+import sys
 
-ruta_archivo_entrada = "Entradas/nivel.txt"
-ruta_archivo_salida = "Salidas/archivo_salida.txt"
+ruta_archivo_entrada = sys.argv[1]
+ruta_archivo_salida = "Salida/archivo_salida.txt"
 
 map = []
 initialState = []
@@ -38,11 +39,11 @@ initialStateBuffer = copy.deepcopy(initialState)
 initialStateBuffer.insert(2,0)
 
 resultSokobanBFS = ''.join(resultBFS(initialState,map)[1])
-resultSokobanDFS = ''.join(resultDFS(initialStateBuffer,map)[1])
 resultSokobanIDS = ''.join(resultIDS(initialStateBuffer,map)[1])
+resultSokobanDFS = ''.join(resultDFS(initialStateBuffer,map)[1])
 
 with open(ruta_archivo_salida, "w") as archivo_salida:
             archivo_salida.write( resultSokobanBFS+"\n"+
-                                  resultSokobanDFS+"\n"+
-                                  resultSokobanIDS
+                                  resultSokobanIDS+"\n"+
+                                   resultSokobanDFS
                                  )

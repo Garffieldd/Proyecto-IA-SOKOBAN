@@ -1,1 +1,1 @@
-python main.py
+python Output.py %1
